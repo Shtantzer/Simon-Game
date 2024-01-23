@@ -8,5 +8,12 @@ function nextSequence() {
     var randomNumber = Math.floor(Math.random(randomNumber) * 4); //nije potrebno staviti randomNumber u .random metodu jer radi bez konteksta
     var randomChosenColor = buttonColors[randomNumber];
     gamePattern.push(randomChosenColor);
-    console.log(gamePattern);
+    $("#" + randomChosenColor).animate({
+        opacity: 0
+    }, 100)
+    $("#" + randomChosenColor).animate({
+        opacity: 1
+    }, 100)
+    var audio = new Audio("sounds/" + randomChosenColor + ".mp3")
+    audio.play();
 }
