@@ -15,12 +15,18 @@ function nextSequence() {
     $("#" + randomChosenColor).animate({
         opacity: 1
     }, 100)
-    var audio = new Audio("sounds/" + randomChosenColor + ".mp3")
-    audio.play();
+    playSound(randomChosenColor);
+    
 }
 
 $(".btn").click(function(e) {
     var userChosenColor = e.target.id;
     userClickedPattern.push(userChosenColor);
     console.log(userClickedPattern);
+    playSound(userChosenColor);
 })
+
+function playSound(name) {
+    var audio = new Audio("sounds/" + name + ".mp3")
+    audio.play();
+}
