@@ -65,6 +65,12 @@ function checkAnswer(currentLevel) {
         }
     }
     else {
-        console.log("wrong");
+        playSound("wrong"); //ovdje sam stavio wrong bez navodnika sto znaci da ga je interpretirao kao argument a treba bit kao string, zato se ostatak koda dolje nije izvrsio
+        $("body").addClass("game-over");
+        $("#level-title").text("Game Over, Press Any Key to Restart"); //pobrinut se da se prioritetnije metode stavljaju prije nekog timeouta da se naravno izbjegne narusavanje dinamike
+        setTimeout(() => {
+            $("body").removeClass("game-over");
+        }, 200);
+        }
     }
-}
+
