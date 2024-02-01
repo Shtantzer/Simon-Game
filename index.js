@@ -22,21 +22,13 @@ function nextSequence() {
     var randomNumber = Math.floor(Math.random(randomNumber) * 4); //nije potrebno staviti randomNumber u .random metodu jer radi bez konteksta
     var randomChosenColor = buttonColors[randomNumber];
     gamePattern.push(randomChosenColor);
-    console.log(gamePattern);
-    $("#" + randomChosenColor).animate({
-        opacity: 0
-    }, 100)
-    $("#" + randomChosenColor).animate({
-        opacity: 1
-    }, 100)
     playSound(randomChosenColor);
-    
+    animatePress(randomChosenColor); //pozvao sam animatePress()
 }
 
 $(".btn").click(function(e) {
     var userChosenColor = e.target.id;
     userClickedPattern.push(userChosenColor);
-    console.log(userClickedPattern);
     playSound(userChosenColor);
     animatePress(userChosenColor);
     checkAnswer(userClickedPattern.length-1); /* ovdje sam iz ne shvacanja logike 
@@ -60,8 +52,9 @@ function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
         console.log("success");
         if (gamePattern.length === userClickedPattern.length) {
-            setTimeout(nextSequence(),
-            1000);
+            setTimeout(() => {
+            nextSequence();
+        }, 500);
         }
     }
     else {
@@ -70,7 +63,17 @@ function checkAnswer(currentLevel) {
         $("#level-title").text("Game Over, Press Any Key to Restart"); //pobrinut se da se prioritetnije metode stavljaju prije nekog timeouta da se naravno izbjegne narusavanje dinamike
         setTimeout(() => {
             $("body").removeClass("game-over");
-        }, 200);
-        }
+        }, 100);
+        startOver();
     }
 
+function startOver() {
+    $("body").keypress(function startOver() {
+        level = 0;
+        gamePattern = [];
+        started = false;
+    });
+    }
+}
+
+   
