@@ -9,7 +9,7 @@ started = false;
 
 $(document).keypress(function() {
     if (!started) {
-        $("#level-title").text("Level " + level)
+        $("#level-title").text("Level " + level);
         nextSequence();
         started = true;
     }
@@ -23,7 +23,8 @@ function nextSequence() {
     var randomChosenColor = buttonColors[randomNumber];
     gamePattern.push(randomChosenColor);
     playSound(randomChosenColor);
-    animatePress(randomChosenColor); //pozvao sam animatePress()
+    animatePress(randomChosenColor);
+    
 }
 
 $(".btn").click(function(e) {
@@ -34,10 +35,10 @@ $(".btn").click(function(e) {
     checkAnswer(userClickedPattern.length-1); /* ovdje sam iz ne shvacanja logike 
     stavio "userClickedPattern.slice(0, -1)" sto nema veze s onim sto meni treba 
     a zbog toga mi dosta dugo igra nije radila *facepalm* */
-})
+});
 
 function playSound(name) {
-    var audio = new Audio("sounds/" + name + ".mp3")
+    var audio = new Audio("sounds/" + name + ".mp3");
     audio.play();
 }
 
@@ -52,9 +53,7 @@ function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
         console.log("success");
         if (gamePattern.length === userClickedPattern.length) {
-            setTimeout(() => {
-            nextSequence();
-        }, 500);
+            setTimeout(() => {nextSequence()}, 500);
         }
     }
     else {
@@ -63,17 +62,13 @@ function checkAnswer(currentLevel) {
         $("#level-title").text("Game Over, Press Any Key to Restart"); //pobrinut se da se prioritetnije metode stavljaju prije nekog timeouta da se naravno izbjegne narusavanje dinamike
         setTimeout(() => {
             $("body").removeClass("game-over");
-        }, 100);
+        }, 200);
         startOver();
-    }
-
-function startOver() {
-    $("body").keypress(function startOver() {
-        level = 0;
-        gamePattern = [];
-        started = false;
-    });
     }
 }
 
-   
+function startOver() {
+    level = 0;
+    gamePattern = [];
+    started = false;
+}
