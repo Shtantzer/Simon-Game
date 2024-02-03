@@ -8,6 +8,7 @@ body {
   font-size: 3rem;
   margin:  5%;
   color: #FEF2BF;
+  user-select: none;
 }
 
 .container {
@@ -50,4 +51,8 @@ body {
 .pressed {
   box-shadow: 0 0 20px white;
   background-color: grey;
+}
+
+span {
+  text-decoration: underline;
 }
