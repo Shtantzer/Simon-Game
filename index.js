@@ -7,7 +7,7 @@ userClickedPattern = [];
 level = 0;
 started = false; 
 
-$(document).keypress(function() {
+$("#start-game").click(function() {
     if (!started) {
         $("#level-title").text("Level " + level);
         nextSequence();
@@ -22,6 +22,7 @@ function nextSequence() {
     var randomNumber = Math.floor(Math.random(randomNumber) * 4); //nije potrebno staviti randomNumber u .random metodu jer radi bez konteksta
     var randomChosenColor = buttonColors[randomNumber];
     gamePattern.push(randomChosenColor);
+    console.log(gamePattern);
     playSound(randomChosenColor);
     animatePress(randomChosenColor);
     
@@ -49,9 +50,10 @@ function animatePress(currentColor) {
     },100);
 }
 
+
+
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-        console.log("success");
         if (gamePattern.length === userClickedPattern.length) {
             setTimeout(() => {nextSequence()}, 500);
         }
@@ -59,16 +61,26 @@ function checkAnswer(currentLevel) {
     else {
         playSound("wrong"); //ovdje sam stavio wrong bez navodnika sto znaci da ga je interpretirao kao argument a treba bit kao string, zato se ostatak koda dolje nije izvrsio
         $("body").addClass("game-over");
-        $("#level-title").text("Game Over, Press Any Key to Restart"); //pobrinut se da se prioritetnije metode stavljaju prije nekog timeouta da se naravno izbjegne narusavanje dinamike
+        $("#level-title").text("Game Over, Press ").append("<span id='start-game'>HERE</span>").append(" to restart");
+        
+        //$("#level-title").text("Game Over, Press Any Key to Restart"); //pobrinut se da se prioritetnije metode stavljaju prije nekog timeouta da se naravno izbjegne narusavanje dinamike
         setTimeout(() => {
             $("body").removeClass("game-over");
         }, 200);
-        startOver();
+        $("#start-game").click(function() { // ne razumijem zasto je click event potreban ak se sa keypress eventom sve lijepo automatski aktiviralo 
+            startOver();
+        });
     }
 }
+
 
 function startOver() {
     level = 0;
     gamePattern = [];
     started = false;
+    $("#level-title").text("Level " + level);
+    nextSequence();
+    // takoder ne razumijem zasto sam morao dodat ove dvije linije ako sam samo promijenio vrstu listenera, u desktop verziji samo imao startOver u else-u a startOver funkcija se 
+    //sastojala od level = 0; gamePattern = []; i started = false; Kada bi pritisnuo tipku, igra bi sama generirala uzorak to jest zapocela novu igru
 }
+
