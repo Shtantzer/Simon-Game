@@ -16,6 +16,7 @@ body {
   width: 50%;
   margin: auto;
   user-select: none;
+  display: inline;
 }
 
 .btn {
@@ -55,4 +56,12 @@ body {
 
 #start-game {
   text-decoration: underline;
+}
+
+.row1 {
+  display: block;
+}
+
+.row2 {
+  display: block;
 }
